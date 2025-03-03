@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanshew Chromebook Repairs</title>
+    <style>
+        @keyframes bobbing {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background: #1e1e1e;
+            padding: 15px 0;
+        }
+        .navbar button {
+            background: #ff5733;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            transition: 0.3s;
+            animation: bobbing 1.5s infinite ease-in-out;
+        }
+        .navbar button:hover {
+            background: #ff784e;
+        }
+        .content {
+            margin-top: 50px;
+            font-size: 24px;
+            animation: bobbing 2s infinite ease-in-out;
+        }
+        .footer {
+            margin-top: 50px;
+            padding: 10px;
+            background: #1e1e1e;
+            font-size: 14px;
+            animation: bobbing 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button onclick="navigate('home')">Home</button>
+        <button onclick="navigate('order')">Order</button>
+        <button onclick="navigate('contact')">Contact</button>
+    </div>
+    <div class="content" id="content">Welcome to Hanshew Chromebook Repairs!</div>
+    <div class="footer">&copy; 2025 Hanshew Chromebook Repairs. All rights reserved.</div>
+    <script>
+        function navigate(page) {
+            const content = document.getElementById('content');
+            if (page === 'home') {
+                content.innerHTML = "<h2>About Us</h2><p>Hanshew Chromebook Repairs specializes in fixing Chromebook issues, including screen repairs and part replacements.</p><h3>Types of Repairs</h3><p>- Screen Repairs</p><p>- Part Replacements</p><h3>Pricing</h3><p>$30 for a repair</p><h3>Money Share</h3><p>33.33%</p>";
+            } else if (page === 'order') {
+                content.innerHTML = '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJybKJxBwnZhlqi5YZDfe10H1k94lbhWlKz51GfhTQiwz5jg/viewform?embedded=true" width="640" height="431" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>';
+            } else if (page === 'contact') {
+                content.innerHTML = "<h2>Contact Us</h2><p>Peyton: 907-312-3637</p><p>Cavin: 907-330-4569</p><p>Abdul: No Phone Found</p>";
+            }
+        }
+    </script>
+</body>
+</html>
