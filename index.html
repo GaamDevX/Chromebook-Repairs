@@ -4,55 +4,230 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hanshew Chromebook Repairs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        @keyframes bobbing {
+        :root {
+            --primary: #4361ee;
+            --primary-light: #4895ef;
+            --secondary: #3f37c9;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #f72585;
+            --success: #4cc9f0;
+        }
+        
+        @keyframes float {
             0%, 100% {
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-5px);
+                transform: translateY(-10px);
             }
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             text-align: center;
-            background-color: #121212;
-            color: white;
+            background: linear-gradient(-45deg, var(--dark), #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--light);
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
+        
         .navbar {
             display: flex;
             justify-content: center;
-            background: #1e1e1e;
-            padding: 15px 0;
+            background: rgba(26, 26, 46, 0.8);
+            padding: 20px 0;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 100;
         }
+        
         .navbar button {
-            background: #ff5733;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
+            padding: 12px 25px;
+            margin: 0 15px;
             cursor: pointer;
             color: white;
-            font-size: 18px;
-            border-radius: 5px;
-            transition: 0.3s;
-            animation: bobbing 1.5s infinite ease-in-out;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+        
+        .navbar button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent), var(--primary-light));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
         .navbar button:hover {
-            background: #ff784e;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
         }
+        
+        .navbar button:hover::after {
+            opacity: 0.2;
+        }
+        
+        .navbar button:active {
+            transform: translateY(1px);
+        }
+        
         .content {
-            margin-top: 50px;
-            font-size: 24px;
-            animation: bobbing 2s infinite ease-in-out;
+            margin: 60px auto;
+            max-width: 900px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease-out;
+            transition: all 0.5s ease;
         }
+        
+        .content h2 {
+            color: var(--success);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(76, 201, 240, 0.3);
+        }
+        
+        .content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .content h3 {
+            color: var(--primary-light);
+            font-size: 1.5rem;
+            margin: 25px 0 15px;
+        }
+        
         .footer {
-            margin-top: 50px;
-            padding: 10px;
-            background: #1e1e1e;
+            margin-top: 60px;
+            padding: 20px;
+            background: rgba(26, 26, 46, 0.8);
             font-size: 14px;
-            animation: bobbing 3s infinite ease-in-out;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(248, 249, 250, 0.3), transparent);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--accent), var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: pulse 2s infinite;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .feature-card:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        iframe {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: none;
+            transition: all 0.5s ease;
+        }
+        
+        iframe:hover {
+            transform: scale(1.02);
+        }
+        
+        .contact-item {
+            display: inline-block;
+            margin: 10px 20px;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .price-tag {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, var(--accent), #f75a9a);
+            color: white;
+            border-radius: 50px;
+            font-weight: 700;
+            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .money-share {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, var(--success), #5bd3f5);
+            color: var(--dark);
+            border-radius: 50px;
+            font-weight: 700;
+            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
         }
     </style>
 </head>
@@ -62,18 +237,72 @@
         <button onclick="navigate('order')">Order</button>
         <button onclick="navigate('contact')">Contact</button>
     </div>
-    <div class="content" id="content">Welcome to Hanshew Chromebook Repairs!</div>
+    <div class="content" id="content">
+        <div class="logo">Hanshew Chromebook Repairs</div>
+        <p>Premium repair services for all Chromebook models</p>
+    </div>
     <div class="footer">&copy; 2025 Hanshew Chromebook Repairs. All rights reserved.</div>
     <script>
         function navigate(page) {
             const content = document.getElementById('content');
-            if (page === 'home') {
-                content.innerHTML = "<h2>About Us</h2><p>Hanshew Chromebook Repairs specializes in fixing Chromebook issues, including screen repairs and part replacements.</p><h3>Types of Repairs</h3><p>- Screen Repairs</p><p>- Part Replacements</p><h3>Pricing</h3><p>$30 for a repair</p><h3>Money Share</h3><p>33.33%</p>";
-            } else if (page === 'order') {
-                content.innerHTML = '<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJybKJxBwnZhlqi5YZDfe10H1k94lbhWlKz51GfhTQiwz5jg/viewform?embedded=true" width="640" height="431" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>';
-            } else if (page === 'contact') {
-                content.innerHTML = "<h2>Contact Us</h2><p>Peyton: 907-312-3637</p><p>Cavin: 907-330-4569</p><p>Abdul: No Phone Found</p>";
-            }
+            content.style.opacity = 0;
+            
+            setTimeout(() => {
+                if (page === 'home') {
+                    content.innerHTML = `
+                        <h2>About Us</h2>
+                        <p>Hanshew Chromebook Repairs specializes in fixing Chromebook issues with premium service and quick turnaround times.</p>
+                        
+                        <h3>Our Services</h3>
+                        <div class="feature-card">
+                            <h4>Screen Repairs</h4>
+                            <p>Cracked or damaged displays replaced with high-quality components</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h4>Part Replacements</h4>
+                            <p>Keyboards, batteries, and other components professionally replaced</p>
+                        </div>
+                        
+                        <h3>Pricing</h3>
+                        <div class="price-tag">$30 per repair</div>
+                        
+                        <h3>Profit Sharing</h3>
+                        <div class="money-share">33.33% share</div>
+                    `;
+                } else if (page === 'order') {
+                    content.innerHTML = `
+                        <h2>Order Service</h2>
+                        <p>Fill out the form below to request a repair:</p>
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJybKJxBwnZhlqi5YZDfe10H1k94lbhWlKz51GfhTQiwz5jg/viewform?embedded=true" width="640" height="431" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                    `;
+                } else if (page === 'contact') {
+                    content.innerHTML = `
+                        <h2>Contact Our Team</h2>
+                        <p>Reach out to any of our team members for assistance:</p>
+                        
+                        <div class="contact-item">
+                            <h4>Peyton</h4>
+                            <p>907-312-3637</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <h4>Cavin</h4>
+                            <p>907-330-4569</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <h4>Abdul</h4>
+                            <p>Email only</p>
+                        </div>
+                    `;
+                }
+                
+                content.style.opacity = 0;
+                setTimeout(() => {
+                    content.style.opacity = 1;
+                }, 50);
+            }, 300);
         }
     </script>
 </body>
