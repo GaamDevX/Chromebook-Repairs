@@ -3,17 +3,462 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wizard Chromebook Repairs</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Wizard Repairs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-light: #4895ef;
-            --secondary: #3f37c9;
-            --dark: #1a1a2e;
-            --light: #f8f9fa;
-            --accent: #f72585;
-            --success: #4cc9f0;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --card-bg: rgba(15, 23, 42, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-background-filter: blur(16px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+        
+        nav a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+        }
+        
+        nav a:hover {
+            color: var(--light);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--light), var(--gray));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .services {
+            padding: 80px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            background: linear-gradient(to right, var(--primary-light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .section-header p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .service-icon i {
+            font-size: 24px;
+            color: white;
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--light);
+        }
+        
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .service-price {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .pricing {
+            padding: 80px 0;
+            background: rgba(2, 6, 23, 0.5);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+        
+        .pricing-card {
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            max-width: 400px;
+        }
+        
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            padding: 8px 0;
+            color: var(--gray);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .pricing-button {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .pricing-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .team {
+            padding: 80px 0;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-card {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .team-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .team-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            color: var(--light);
+        }
+        
+        .team-card p {
+            color: var(--gray);
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+        
+        .team-contact {
+            color: var(--light);
+            font-size: 1rem;
+        }
+        
+        .order-form {
+            padding: 80px 0;
+            background: rgba(2, 6, 23, 0.5);
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        .form-container iframe {
+            width: 100%;
+            min-height: 600px;
+            border: none;
+            border-radius: 12px;
+        }
+        
+        footer {
+            padding: 60px 0 20px;
+            background: rgba(2, 6, 23, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column a:hover {
+            color: var(--light);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+        
+        .dev-contact {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .dev-contact a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .dev-contact a:hover {
+            color: var(--accent);
         }
         
         @keyframes float {
@@ -26,284 +471,260 @@
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-            background: linear-gradient(-45deg, var(--dark), #16213e, #0f3460);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: var(--light);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .navbar {
-            display: flex;
-            justify-content: center;
-            background: rgba(26, 26, 46, 0.8);
-            padding: 20px 0;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 100;
-        }
-        
-        .navbar button {
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            padding: 12px 25px;
-            margin: 0 15px;
-            cursor: pointer;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .navbar button::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--accent), var(--primary-light));
+        .animate {
             opacity: 0;
-            transition: opacity 0.3s ease;
+            animation: fadeIn 0.8s ease-out forwards;
         }
         
-        .navbar button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+        .delay-1 {
+            animation-delay: 0.2s;
         }
         
-        .navbar button:hover::after {
-            opacity: 0.2;
+        .delay-2 {
+            animation-delay: 0.4s;
         }
         
-        .navbar button:active {
-            transform: translateY(1px);
+        .delay-3 {
+            animation-delay: 0.6s;
         }
         
-        .content {
-            margin: 60px auto;
-            max-width: 900px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.8s ease-out;
-            transition: all 0.5s ease;
-        }
-        
-        .content h2 {
-            color: var(--success);
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(76, 201, 240, 0.3);
-        }
-        
-        .content p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 15px;
-        }
-        
-        .content h3 {
-            color: var(--primary-light);
-            font-size: 1.5rem;
-            margin: 25px 0 15px;
-        }
-        
-        .footer {
-            margin-top: 60px;
-            padding: 20px;
-            background: rgba(26, 26, 46, 0.8);
-            font-size: 14px;
-            backdrop-filter: blur(10px);
-            position: relative;
-        }
-        
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(248, 249, 250, 0.3), transparent);
-        }
-        
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, var(--accent), var(--success));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: pulse 2s infinite;
-        }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 15px 0;
-            transition: all 0.3s ease;
-            border-left: 3px solid var(--accent);
-        }
-        
-        .feature-card:hover {
-            transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        iframe {
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: none;
-            transition: all 0.5s ease;
-        }
-        
-        iframe:hover {
-            transform: scale(1.02);
-        }
-        
-        .contact-item {
-            display: inline-block;
-            margin: 10px 20px;
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .contact-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-        
-        .price-tag {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(45deg, var(--accent), #f75a9a);
-            color: white;
-            border-radius: 50px;
-            font-weight: 700;
-            margin: 10px 0;
-            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
-            animation: pulse 2s infinite;
-        }
-        
-        .money-share {
-            display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(45deg, var(--success), #5bd3f5);
-            color: var(--dark);
-            border-radius: 50px;
-            font-weight: 700;
-            margin: 10px 0;
-            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <button onclick="navigate('home')">Home</button>
-        <button onclick="navigate('order')">Order</button>
-        <button onclick="navigate('contact')">Contact</button>
-    </div>
-    <div class="content" id="content">
-        <div class="logo">Wizard Chromebook Repairs</div>
-        <p>Premium repair services for all Chromebook models</p>
-    </div>
-    <div class="footer">&copy; 2025 Wizard Chromebook Repairs. All rights reserved.</div>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="https://t4.ftcdn.net/jpg/02/05/20/59/360_F_205205938_JpqXslCxGTRwS16rnnbofzhLJk64owlx.jpg" alt="Wizard Repairs Logo" class="logo-img">
+                <div class="logo-text">Wizard Repairs</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#order">Order</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container animate">
+            <h1 class="animate delay-1">Expert Chromebook Repairs</h1>
+            <p class="animate delay-2">Fast, reliable repairs with guaranteed quality for all Chromebook models.</p>
+            <a href="#order" class="cta-button animate delay-3">
+                Order Now <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header animate">
+                <h2>Our Services</h2>
+                <p>We specialize in all types of Chromebook repairs with premium quality parts.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card glass animate delay-1">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3>Screen Replacement</h3>
+                    <p>Cracked or damaged displays replaced with high-quality components and precision installation.</p>
+                    <div class="service-price">Starting at $15</div>
+                </div>
+                <div class="service-card glass animate delay-2">
+                    <div class="service-icon">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                    <h3>Keyboard Repair</h3>
+                    <p>Sticky or non-responsive keys fixed with genuine replacement parts and thorough testing.</p>
+                    <div class="service-price">Starting at $15</div>
+                </div>
+                <div class="service-card glass animate delay-3">
+                    <div class="service-icon">
+                        <i class="fas fa-battery-full"></i>
+                    </div>
+                    <h3>Battery Replacement</h3>
+                    <p>Restore your Chromebook's battery life with our high-capacity replacement batteries.</p>
+                    <div class="service-price">Starting at $25</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header animate">
+                <h2>Simple Pricing</h2>
+                <p>Affordable repairs with transparent pricing.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card glass animate delay-1">
+                    <h3>Standard Repair</h3>
+                    <div class="price">$55</div>
+                    <ul class="pricing-features">
+                        <li>All 3 Component Repair</li>
+                        <li>Quality replacement parts</li>
+                        <li>5-day warranty</li>
+                        <li>Professional service</li>
+                    </ul>
+                    <a href="#order" class="pricing-button">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <div class="container">
+            <div class="section-header animate">
+                <h2>Our Team</h2>
+                <p>Meet the technicians behind Wizard Repairs.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card glass animate delay-1">
+                    <div class="team-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Peyton</h3>
+                    <p>Lead Technician</p>
+                    <div class="team-contact">907-312-3637</div>
+                </div>
+                <div class="team-card glass animate delay-2">
+                    <div class="team-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Cavin</h3>
+                    <p>Repair Specialist</p>
+                    <div class="team-contact">907-330-4569</div>
+                </div>
+                <div class="team-card glass animate delay-3">
+                    <div class="team-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>Abdul</h3>
+                    <p>Customer Support</p>
+                    <div class="team-contact">Email Only</div>
+                </div>
+                <div class="team-card glass animate delay-3">
+                    <div class="team-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Jake</h3>
+                    <p>Website Developer</p>
+                    <div class="team-contact">Monitors Requests</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Form Section -->
+    <section class="order-form" id="order">
+        <div class="container">
+            <div class="section-header animate">
+                <h2>Order Your Repair</h2>
+                <p>Fill out our simple form to get started.</p>
+            </div>
+            <div class="form-container glass animate delay-1">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJybKJxBwnZhlqi5YZDfe10H1k94lbhWlKz51GfhTQiwz5jg/viewform?embedded=true"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Wizard Repairs</h3>
+                    <p>Professional Chromebook repair services with quick turnaround times.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#team">Our Team</a></li>
+                        <li><a href="#order">Order Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Peyton: 907-312-3637</li>
+                        <li>Cavin: 907-330-4569</li>
+                        <li>Abdul: Email Only</li>
+                        <li>Jake: Website Developer</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="dev-contact">
+                Website built and maintained by <a href="#" target="_blank">Jake</a> - monitors all repair requests
+            </div>
+            <div class="copyright">
+                &copy; 2025 Wizard Repairs. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
     <script>
-        function navigate(page) {
-            const content = document.getElementById('content');
-            content.style.opacity = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate');
             
-            setTimeout(() => {
-                if (page === 'home') {
-                    content.innerHTML = `
-                        <h2>About Us</h2>
-                        <p>Hanshew Chromebook Repairs specializes in fixing Chromebook issues with premium service and quick turnaround times.</p>
-                        
-                        <h3>Our Services</h3>
-                        <div class="feature-card">
-                            <h4>Screen Repairs</h4>
-                            <p>Cracked or damaged displays replaced with high-quality components</p>
-                        </div>
-                        
-                        <div class="feature-card">
-                            <h4>Part Replacements</h4>
-                            <p>Keyboards, batteries, and other components professionally replaced</p>
-                        </div>
-                        
-                        <h3>Pricing</h3>
-                        <div class="price-tag">$30 per repair</div>
-                        
-                        <h3>Profit Sharing</h3>
-                        <div class="money-share">33.33% share</div>
-                    `;
-                } else if (page === 'order') {
-                    content.innerHTML = `
-                        <h2>Order Service</h2>
-                        <p>Fill out the form below to request a repair:</p>
-                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeJybKJxBwnZhlqi5YZDfe10H1k94lbhWlKz51GfhTQiwz5jg/viewform?embedded=true" width="640" height="431" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-                    `;
-                } else if (page === 'contact') {
-                    content.innerHTML = `
-                        <h2>Contact Our Team</h2>
-                        <p>Reach out to any of our team members for assistance:</p>
-                        
-                        <div class="contact-item">
-                            <h4>Peyton</h4>
-                            <p>907-312-3637</p>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <h4>Cavin</h4>
-                            <p>907-330-4569</p>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <h4>Abdul</h4>
-                            <p>Email only</p>
-                        </div>
-                    `;
-                }
-                
-                content.style.opacity = 0;
-                setTimeout(() => {
-                    content.style.opacity = 1;
-                }, 50);
-            }, 300);
-        }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
     </script>
 </body>
 </html>
